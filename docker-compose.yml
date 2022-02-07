@@ -1,0 +1,37 @@
+version: '3.6'
+services:
+    db:
+        image: postgres:latest
+        container_name: postgres
+        ports:
+            - "5432:5432"
+        restart: on-failure
+        environment:
+            - POSTGRES_USER=${DBUSER}
+            - POSTGRES_PASSWORD=${DBPASS}
+            - POSTGRES_DB=${DBNAME}
+        networks:
+            - dev
+
+    hashed_password:
+        build: .
+        image: hashed_password:latest
+        container_name: hashed_password
+        ports:
+            - "8080:8080"
+        environment:
+            - DBHOST=${DBHOST}
+            - DBUSER=${DBUSER}
+            - DBPASS=${DBPASS}
+            - DBNAME=${DBNAME}
+        depends_on:
+            - db
+        links:
+            - db
+        networks:
+            - dev
+        restart: on-failure
+networks:
+    dev:
+      name: dev
+      driver: bridge
