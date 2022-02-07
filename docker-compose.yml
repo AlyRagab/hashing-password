@@ -24,6 +24,7 @@ services:
             - DBUSER=${DBUSER}
             - DBPASS=${DBPASS}
             - DBNAME=${DBNAME}
+            - SALT_SECRET=${SALT_SECRET}
         depends_on:
             - db
         links:
