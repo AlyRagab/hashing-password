@@ -9,8 +9,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var DB *sql.DB
-
 // Connecting to database
 func ConnectDb() (*sql.DB, error) {
 	var (
