@@ -19,6 +19,12 @@ create table hashed_password(
 curl -d "password123" -X POST http://localhost:8080/password
 ```
 
+- Check the database
+
+```
+select * from hashed_password;
+```
+
 - EndPoints
  - `localhost:8080/health` => Health status with database
  - `http://localhost:8080/password` => POST endpoint
