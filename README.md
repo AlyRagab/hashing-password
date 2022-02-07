@@ -24,7 +24,7 @@ curl -d "password123" -X POST http://localhost:8080/password
  - `http://localhost:8080/password` => POST endpoint
 
 ### Dependencies:
-- [Gorilla Mux](github.com/gorilla/mux)
+- [Gorilla Mux](https://github.com/gorilla/mux)
 - [Postgres Driver](https://github.com/lib/pq)
 - [Logrus Package](https://github.com/sirupsen/logrus)
 - [Crypto Package](https://golang.org/x/crypto)
