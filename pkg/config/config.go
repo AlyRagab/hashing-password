@@ -3,10 +3,10 @@ package config
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 
 	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 )
 
 var DB *sql.DB
@@ -31,7 +31,7 @@ func ConnectDb() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	} else {
-		log.Println("Successfully connected to database")
+		log.Info("Successfully connected to database")
 	}
 	return db, nil
 }

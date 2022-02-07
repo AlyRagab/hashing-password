@@ -11,14 +11,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type Data struct {
-	Pass string `json:"pass"`
-}
-
 func init() {
 	db, err := config.ConnectDb()
 	if err != nil {
-		log.Error(err)
+		log.Fatalln(err)
 	}
 	defer db.Close()
 }
@@ -33,12 +29,13 @@ func password(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintln(w, "Hello Password")
 	db, err := config.ConnectDb()
 	if err != nil {
-		log.Error(err)
+		log.Fatalln(err)
 	}
+
 	defer db.Close()
 	reqBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		log.Error(err)
+		log.Fatalln(err)
 	}
 
 	insertStatement := (`INSERT INTO hashed_password(password) VALUES($1)`)
@@ -47,6 +44,7 @@ func password(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 }
+
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
