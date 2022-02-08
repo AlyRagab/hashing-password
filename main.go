@@ -28,7 +28,6 @@ func notfound(w http.ResponseWriter, r *http.Request) {
 }
 
 func password(w http.ResponseWriter, r *http.Request) {
-	// fmt.Fprintln(w, "Hello Password")
 	db, err := provider.ConnectDb()
 	if err != nil {
 		log.Fatalln(err)
