@@ -14,11 +14,11 @@ import (
 )
 
 func init() {
-	db, err := provider.ConnectDb()
+	var err error
+	provider.DB, err = provider.ConnectDb()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer db.Close()
 }
 
 // HTTP 404 NotFound
@@ -28,12 +28,6 @@ func notfound(w http.ResponseWriter, r *http.Request) {
 }
 
 func password(w http.ResponseWriter, r *http.Request) {
-	db, err := provider.ConnectDb()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	defer db.Close()
 	reqBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Fatalln(err)
@@ -49,7 +43,7 @@ func password(w http.ResponseWriter, r *http.Request) {
 
 	// Inserting into database
 	insertStatement := (`INSERT INTO hashed_password(password) VALUES($1)`)
-	_, err = db.Exec(insertStatement, hashedPassword)
+	_, err = provider.DB.Exec(insertStatement, hashedPassword)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -58,14 +52,13 @@ func password(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		db, err := provider.ConnectDb()
+		err := provider.DB.Ping()
 		if err != nil {
 			fmt.Fprintf(w, "Not healthy %d", http.StatusInternalServerError)
 			log.Error("database connection not heathy")
 		} else {
 			fmt.Fprintf(w, "Healthy %d", http.StatusOK)
 		}
-		defer db.Close()
 	})
 	log.Info("Starting Server on 0.0.0.0:8080")
 	r.HandleFunc("/password", password).Methods("POST")
