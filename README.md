@@ -34,3 +34,6 @@ select * from hashed_password;
 - [Postgres Driver](https://github.com/lib/pq)
 - [Logrus Package](https://github.com/sirupsen/logrus)
 - [Crypto Package](https://golang.org/x/crypto)
+
+---------
+- [Blog Post](https://medium.com/p/c1c31f6ec3a8)
